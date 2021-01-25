@@ -1,32 +1,61 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <v-app light>
+    <div>
+      <!-- <nav>
+        <v-toolbar id="navbar" >
+            <v-app-bar-nav-icon @click="side= !side" v-if="!$vuetify.breakpoint.smAndUp"></v-app-bar-nav-icon>
+            <v-toolbar-title>
+              <span class="font-weight-black pr-3">Digital Card Builder</span>
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn text class="text-capitalize primary--text text--darken-2" v-for="(item, i) in navItems" :key="i" :href="item.link"><v-icon left v-text="item.icon"></v-icon><h4>{{ item.text}}</h4></v-btn>
+        </v-toolbar> -->
+      <!-- </nav> -->
+      <v-main>
+        <v-container fluid>
+            <router-view /> 
+        </v-container>
+      </v-main>
     </div>
-    <router-view/>
-  </div>
+  </v-app>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  data(){
+    return{
+      side:false,
+      transitionName: 'scale-transition',
+      navItems: [
+        { text: 'Home', icon: '', link: '' },
+        { text: 'About Us', icon: '', link: '' },
+        { text: 'Contact Us', icon: '', link: '' }
+      ],
     }
+  },methods:{
+    logout() {
+      this.$store.commit('RemoveAuth',{status:false,username:null,admin:false})
+      this.$router.push({ name: "Home" })
+    }
+  },
+  mounted() {
+    // this.$store.commit('getActiveUser')
+    // this.$root.$on('AlertUser',(title, state)=>{ this.snackbar.title=title, this.snackbar.state=state})
+    // this.$route.name !== "Dashboard" && this.$store.state.authenticated ?  this.$router.replace({ name: "Dashboard" }) : false
+    // this.$route.name !== "Home" && !this.$store.state.authenticated ?  this.$router.push({ name: "Home" }) : false
   }
+}
+</script>
+
+<style>
+#navbar a{
+  color: black;
+  padding-inline-end: 3%;
+  text-align: center;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+#navbar a:hover{
+   background-color:grey;
+    color: white;
 }
 </style>
